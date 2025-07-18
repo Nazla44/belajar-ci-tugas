@@ -80,10 +80,14 @@
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script>
-$(document).ready(function() {
+/*$(document).ready(function() {
     var ongkir = 0;
     var total = 0; 
-    hitungTotal();
+    hitungTotal();*/
+
+    $(document).ready(function () {
+    let ongkir = 0;
+    const subtotal = <?= $total ?>;
 
     $('#kelurahan').select2({
     placeholder: 'Ketik nama kelurahan...',
@@ -110,9 +114,11 @@ $(document).ready(function() {
     },
     minimumInputLength: 3
 });
+    
+
 
 $("#kelurahan").on('change', function() {
-    var id_kelurahan = $(this).val(); 
+    const id_kelurahan = $(this).val(); 
     $("#layanan").empty();
     ongkir = 0;
 
@@ -123,31 +129,60 @@ $("#kelurahan").on('change', function() {
             'destination': id_kelurahan, 
         },
         dataType: 'json',
-        success: function(data) { 
-            data.forEach(function(item) {
-                var text = item["description"] + " (" + item["service"] + ") : estimasi " + item["etd"] + "";
-                $("#layanan").append($('<option>', {
-                    value: item["cost"],
-                    text: text 
-                }));
-            });
-            hitungTotal(); 
-        },
+        success: function(data) {
+    data.forEach(function(item) {
+        const text = item["name"] + " (" + item["service"] + ") : estimasi " + item["etd"];
+        $("#layanan").append($('<option>', {
+            value: item["cost"],
+            text: text 
+        }));
+    });
+    hitungTotal(); 
+},
+
     });
 });
 
-$("#layanan").on('change', function() {
+
+
+/*$("#layanan").on('change', function() {
     ongkir = parseInt($(this).val());
     hitungTotal();
-});  
+}); */
 
-    function hitungTotal() {
+$('#layanan').on('select2:select', function (e) {
+    const val = $(this).val();
+    ongkir = Number(val) || 0;      // konversi aman ke angka
+    hitungTotal();
+});
+
+    /*function hitungTotal() {
         total = ongkir + <?= $total ?>;
 
         $("#ongkir").val(ongkir);
         $("#total").html("IDR " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
         $("#total_harga").val(total);
-    }
+    }*/
+   function hitungTotal() {
+    const subtotal = <?= $total ?>;     // subtotal dari PHP
+    const total    = subtotal + ongkir;
+
+    // Tampilkan ongkir di input
+    $('#ongkir').val('IDR ' + ongkir.toLocaleString('id-ID'));
+
+    // Tampilkan total di tabel
+    $('#total').html('IDR ' + total.toLocaleString('id-ID'));
+
+    // Simpan ke input hidden untuk dikirim saat checkout
+    $('#total_harga').val(total);
+}
+
 });
+
+$('#layanan').select2({
+    placeholder: 'Pilih layanan pengiriman',
+    width: '100%'
+});
+
 </script>
 <?= $this->endSection() ?>

@@ -15,7 +15,9 @@ class RedirectFilter implements FilterInterface
 }
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 {
-    return $response; // Tidak melakukan apa-apa
+     log_message('debug', 'TRACE URL : ' . current_url());
+    log_message('debug', 'TRACE ROLE: ' . session('role'));
+    log_message('debug', 'TRACE LOGIN: ' . (session('isLoggedIn') ? 'yes' : 'no'));
 }
 
 }

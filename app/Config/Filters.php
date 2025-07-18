@@ -29,6 +29,9 @@ class Filters extends BaseConfig
     public array $aliases = [
         'csrf'          => CSRF::class,
         'toolbar'       => DebugToolbar::class,
+        'role'       => \Myth\Auth\Filters\RoleFilter::class,
+        'permission' => \Myth\Auth\Filters\PermissionFilter::class,
+        'group'      => \Myth\Auth\Filters\GroupFilter::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
@@ -63,6 +66,7 @@ class Filters extends BaseConfig
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar
         ],
+
     ];
 
     /**
@@ -81,6 +85,8 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'secureheaders',
         ],
+
+
     ];
 
     /**

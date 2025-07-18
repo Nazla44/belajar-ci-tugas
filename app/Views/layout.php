@@ -48,6 +48,7 @@ if(uri_string()!=""){
 
  <?= $this->include('components/header') ?>
 
+
 <?= $this->include('components/sidebar') ?>
 
     <main id="main" class="main">

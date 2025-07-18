@@ -34,11 +34,14 @@
             </li><!-- End Kategori Produk Nav -->
             
             <li class="nav-item">
-                <a class="nav-link <?php echo (uri_string() == 'profile') ? "" : "collapsed" ?>" href="profile">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                <a class="nav-link <?= uri_string() == 'diskon' ? '' : 'collapsed' ?>" href="<?= base_url('diskon') ?>">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>Diskon</span>
                 </a>
-            </li><!-- End Profile Nav -->
+            </li>
+            <!-- End Diskon Nav -->
+             
+            
             
             <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'faq') ? "" : "collapsed" ?>" href="faq">
@@ -49,6 +52,15 @@
         <?php
         }
         ?>
+        <!-- === menu profile untuk SEMUA user yang sudah login === -->
+            <?php if (session()->get('isLoggedIn')) : ?>
+            <li class="nav-item">
+                <a class="nav-link <?= uri_string() == 'profile' ? '' : 'collapsed' ?>" href="profile">
+                   <i class="bi bi-person"></i>
+                    <span>Profile</span>
+               </a>
+            </li>
+            <?php endif ?>
     </ul>
 
 </aside><!-- End Sidebar-->
